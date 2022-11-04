@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  - var results = Dog;
+  div(class="container-fluid")
+    each value,index in results
+      div(class="row", onclick=`buy(${index})`)
+        div(class="col-sm-2") #{value.dog_Name}
+        div(class="col-sm-2") #{value.age}
+        div(class="col-sm-2") #{value.price}
+  script. 
+        function buy(cost){
+          alert('You purchased value ' + cost)
+        }
