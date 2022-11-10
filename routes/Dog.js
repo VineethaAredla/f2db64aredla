@@ -1,5 +1,5 @@
-import { Router } from 'express';
-var router = Router();
+var express = require('express');
+var router = express.Router();
 
 class Dog {
 constructor(dog_Name, age, price){
@@ -19,4 +19,4 @@ router.get('/', function(req, res, next) {
 });
 
 
-export default router;
+module.exports = router;
