@@ -17,5 +17,10 @@ router.get('/', function(req, res, next) {
    res.render('Dog', { title: 'Search Results Dog',Dog : [D1,D2,D3] });
 });
 
+var express = require('express');
+const Dog_controlers= require('../controllers/dog');
+var router = express.Router();
+/* GET costumes */
+router.get('/', Dog_controlers.dog_view_all_Page );
 
 module.exports = router;

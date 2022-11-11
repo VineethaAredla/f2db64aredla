@@ -1,17 +1,15 @@
-extends ./layout.pug
+extends layout
+
+
 
 block content
-  h1= title
-  p Welcome to #{title}
-      - var results = #{Dog};
-        div(class="container-fluid")
-    
-      each value,index in results
-           div(class="row", onclick=`buy(${index})`)
-                div(class="col-sm-2") #{value.dog_Name}
-                div(class="col-sm-2") #{value.age}
-                div(class="col-sm-2") #{value.price}
-  script. 
-        function buy(cost){
-          alert('You purchased value ' + cost)
+    h1= title
+    div.container-fluid
+        div.row
+            each item, index in results
+                div.col-sm-2(onclick=`buy(${index})`) dog_Name:#{item["dog_Name"]} <br> age: #{item["age"]} <br> price: #{item["price"]}
+    script.
+        function buy(cost) {
+            alert('You purchased item '+ cost);
+
         }
