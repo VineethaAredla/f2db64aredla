@@ -1,0 +1,24 @@
+extends layout
+block content
+ h1= title
+ if (toShow==null)
+    h2 no instance to Detail
+ else
+  - let dogid = toShow._id
+  - let dog_Name = toShow.dog_Name
+  - let age = toShow.age
+  - let price = toShow.price
+  div
+   div.row
+    div(class='dogAttr mr-3') Dog ID is:
+    div #{dogid}
+   div.row
+    div(class='dogAttr mr-3') Dog Name is:
+    div #{dog_Name}
+   div.row
+    div(class='dogAttr mr-3') Dog Age is:
+    div #{age}
+   div.row
+    div(class='dogAttr mr-3') Dog Price is:
+    div #{price}
+ 
