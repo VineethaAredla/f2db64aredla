@@ -1,4 +1,4 @@
-extends ./layout.pug
+extends layout
 
 block content
     h1= title
@@ -12,9 +12,9 @@ block content
         function doBump(){
               count += bump;
               bump += 1;
-              document.getElementById("bump").innerHTML = "count " + count + " with bump " + bump;
+              document.getElementById("bump").innerHTML = "Count " + count + " with Bump " + bump;
               }
 
 
-    a(href="Dog") Click here to get Dog details
+    a(href="dog") Click here to get Dog details
 

@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var Dog = require("./models/Dog");
+
 
 require('dotenv').config();
 const connectionString =
@@ -20,12 +20,14 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once("open", function(){
 console.log("Connection to DB succeeded")});
 
+var dog = require("./models/dog");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var dogRouter = require('./routes/Dog');
+var dogRouter = require('./routes/dog');
 var gridbuildRouter = require('./routes/gridbuild');
 var selectorRouter = require('./routes/selector');
 var resourceRouter = require('./routes/resource');
+
 
 var app = express();
 
@@ -41,7 +43,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/Dog', dogRouter);
+app.use('/dog', dogRouter);
+app.use('/dog',dog);
 app.use('/gridbuild', gridbuildRouter);
 app.use('/selector', selectorRouter);
 app.use('/resource',resourceRouter);
@@ -66,26 +69,24 @@ app.use(function(err, req, res, next) {
 // We can seed the collection if needed on server start
 async function recreateDB(){
  // Delete everything
- await Dog.deleteMany();
- let instance1 = new 
- Dog({dog_Name:"ghost", age:13,price:2589.4});
-      instance1.save( function(err,doc) {
-      if(err) return console.error(err);
-           console.log("First object saved")
+ await dog.deleteMany();
+ let instance1 = new dog({dog_Name:"ghost", age:13,price:2589.4});
+ instance1.save( function(err,doc) {
+  if(err) return console.error(err);
+   console.log("First object saved")
       });
- let instance2 = new 
- Dog({dog_Name:"halo", age:10,price:253.4});
-      instance2.save( function(err,doc) {
-      if(err) return console.error(err);
-            console.log("Second object saved")
+ let instance2 = new dog({dog_Name:"halo", age:10,price:253.4});
+ instance2.save( function(err,doc) {
+  if(err) return console.error(err);
+   console.log("Second object saved")
  });
- let instance3 = new
- Dog({dog_Name:"dolly", age:30,price:232.90});
-     instance3.save( function(err,doc) {
-     if(err) return console.error(err);
-         console.log("Third object saved")
+ let instance3 = new dog({dog_Name:"dolly", age:30,price:232.90});
+ instance3.save( function(err,doc) {
+  if(err) return console.error(err);
+   console.log("Third object saved")
  });
 }
 let reseed = true;
 if (reseed) { recreateDB();}
+
 module.exports = app;

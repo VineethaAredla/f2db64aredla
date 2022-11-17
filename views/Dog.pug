@@ -1,15 +1,14 @@
 extends layout
 
-
-
 block content
     h1= title
+    - let dog = results
     div.container-fluid
-        div.row
-            each item, index in results
-                div.col-sm-2(onclick=`buy(${index})`) dog_Name:#{item["dog_Name"]} <br> age: #{item["age"]} <br> price: #{item["price"]}
+     div.row
+      each item, index in dog
+       div.col-sm-2(onclick=`buy(${index})`) dog_Name:#{item.dog_Name} <br> age: #{item.age} <br> price: #{item.price}
     script.
-        function buy(cost) {
-            alert('You purchased item '+ cost);
+     function buy(cost) {
+      alert(`You purchased item ${cost+1}`);
 
         }

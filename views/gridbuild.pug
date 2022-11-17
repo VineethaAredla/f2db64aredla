@@ -2,17 +2,20 @@ extends layout
 
 block content
   h1= title
-  p  #{query.rows} and #{query.cols}
-  - let rows = Number(query.rows);
-  - let col = Number(query.cols);
-  if !(Number.isInteger(rows) && Number.isInteger(col))
-    p either rows or cols is not an integer
-  else if rows > 10 || rows < 1
-    p rows out of range
-  else if col > 10 || col <1
-    p cols out of range
-  else
-    table#outer
+  p query: #{query.rows} and #{query.cols}
+  - var rows = Number(query.rows);
+  - var cols = Number(query.cols);
+  -if !(Number.isInteger(rows) || Number.isInteger(cols)){
+    p Either rows or cols is not an integer
+  -}
+  -else if (rows > 10 || rows < 1){
+    p Rows out of range it should be in the range of 1 to 10
+  -}
+  -else if (cols > 10 || cols <1){
+    p Columns out of range it should be in the range of 1 to 10
+  -}
+  -else{
+    table(class="table")
     - for(let i=0; i<rows; i++){
       tr#middle
       <br>
@@ -20,3 +23,4 @@ block content
           td= (1 + i + (j * rows)) +"  "
         - }
     - }
+  }
