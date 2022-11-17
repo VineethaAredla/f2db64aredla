@@ -136,7 +136,7 @@ exports.dog_create_Page = function (req, res) {
 exports.dog_update_Page = async function (req, res) {
     console.log("update view for item " + req.query.id)
     try {
-        let result = await watch.findById(req.query.id)
+        let result = await dog.findById(req.query.id)
         res.render('dogupdate', { title: 'dog Update', toShow: result });
     }
     catch (err) {
