@@ -2,13 +2,17 @@ extends layout
 
 block content
     h1= title
-    - let dog = results
-    div.container-fluid
-     div.row
-      each item, index in dog
-       div.col-sm-2(onclick=`buy(${index})`) dog_Name:#{item.dog_Name} <br> age: #{item.age} <br> price: #{item.price}
-    script.
-     function buy(cost) {
-      alert(`You purchased item ${cost+1}`);
+    - let dog = results;
+    div(class="container-fluid")
+     div(class="row m-1")
+      each item in dog
+       - let destination = `dispatch(\"/dog/update?id=${item._id}\")`
+       div(class="row-sm-2", class="m-1") dog_Name:#{item.dog_Name} <br> age: #{item.age} <br> price: #{item.price}
+        button.btn( class="btn-primary ml-1", onclick= destination) Update
 
-        }
+     script.
+      function dispatch(path){
+       window.location.href=path;}
+     
+
+        
