@@ -2,17 +2,26 @@ extends layout
 
 block content
     h1= title
-    - let dog = results;
-    div(class="container-fluid")
-     div(class="row m-1")
-      each item in dog
-       - let destination = `dispatch(\"/dog/update?id=${item._id}\")`
-       div(class="row-sm-2", class="m-1") dog_Name:#{item.dog_Name} <br> age: #{item.age} <br> price: #{item.price}
-        button.btn( class="btn-primary ml-1", onclick= destination) Update
+    - let dog = results
+    - let create = `dispatch(\"/dog/create\")`
+    button.btn( class="btn-info ml-1", onclick= create) Create
+    div(class="container-fluid mt-3")
+         div(class="row m-1")
+           each d,index in dog
+               - let destination = `dispatch(\"/dog/update?id=${d._id}\")`
+               - let detail = `dispatch(\"/dog/detail?id=${d._id}\")`
+               - let deleteItem = `dispatch(\"/dog/delete?id=${d._id}\")`
+               div(class="row-sm-2", class="m-1") #{d.dog_Name}, #{d.dog_age}, #{d.dog_price}
 
-     script.
-      function dispatch(path){
-       window.location.href=path;}
-     
+               p
+               button.btn( class="btn-primary ml-1", onclick= destination) Update
+               p
+               button.btn( class="btn-primary ml-1", onclick= detail) Detail
+               p
+               button.btn( class="btn-primary ml-1", onclick= deleteItem) Delete
+    script.
+       function dispatch(path) {
+         window.location.href=path
+       }
 
-        
+       

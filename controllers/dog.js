@@ -1,4 +1,5 @@
 var dog = require('../models/dog');
+
 //List of all dogs
 exports.dog_list = function(req, res) {
  res.send('NOT IMPLEMENTED: dog list');

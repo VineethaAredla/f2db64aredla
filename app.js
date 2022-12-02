@@ -8,6 +8,24 @@ var LocalStrategy = require('passport-local').Strategy;
 
 
 
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+   Account.findOne({ username: username }, function (err, user) {
+    if (err) { return done(err); }
+    if (!user) {
+     return done(null, false, { message: 'Incorrect username.' });
+    }
+    if (!user.validPassword(password)) {
+     return done(null, false, { message: 'Incorrect password.' });
+    }
+  return done(null, user);
+  });
+}
+))
+
+var dog = require("./models/dog");
+
+
 require('dotenv').config();
 const connectionString =
 process.env.MONGO_CON
@@ -15,14 +33,15 @@ mongoose = require('mongoose');
 mongoose.connect(connectionString,
 {useNewUrlParser: true,
 useUnifiedTopology: true});
+
 //Get the default connection
 var db = mongoose.connection;
+
 //Bind connection to error event
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once("open", function(){
-console.log("Connection to DB succeeded")});
+ console.log("Connection to DB succeeded")});
 
-var dog = require("./models/dog");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var dogRouter = require('./routes/dog');
@@ -55,7 +74,6 @@ app.use(require('express-session')({
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/dog', dogRouter);
-app.use('/dog',dog);
 app.use('/gridbuild', gridbuildRouter);
 app.use('/selector', selectorRouter);
 app.use('/resource',resourceRouter);
@@ -64,6 +82,7 @@ app.use('/resource',resourceRouter);
 // Use the existing connection
 // The Account model
 var Account =require('./models/account');
+
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
@@ -94,11 +113,13 @@ async function recreateDB(){
   if(err) return console.error(err);
    console.log("First object saved")
       });
+ 
  let instance2 = new dog({dog_Name:"halo", age:10,price:253.4});
  instance2.save( function(err,doc) {
   if(err) return console.error(err);
    console.log("Second object saved")
  });
+ 
  let instance3 = new dog({dog_Name:"dolly", age:30,price:232.90});
  instance3.save( function(err,doc) {
   if(err) return console.error(err);
@@ -107,21 +128,6 @@ async function recreateDB(){
 }
 let reseed = true;
 if (reseed) { recreateDB();}
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-   Account.findOne({ username: username }, function (err, user) {
-    if (err) { return done(err); }
-    if (!user) {
-     return done(null, false, { message: 'Incorrect username.' });
-    }
-    if (!user.validPassword(password)) {
-     return done(null, false, { message: 'Incorrect password.' });
-    }
-  return done(null, user);
-  });
-}
-))
 
 
 module.exports = app;
